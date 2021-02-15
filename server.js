@@ -13,6 +13,8 @@ app.use(fileUpload({
     useTempFiles: true
 }))
 
+app.use("/user", require("./routes/userRouter"))
+
 const URI = process.env.MONGODB_URL
 mongoose.connect(URI, {
     useCreateIndex: true,
@@ -25,7 +27,7 @@ mongoose.connect(URI, {
 })
 
 app.get("/", (req, res) => {
-    res.json({ msg: "Wlecome to ecommerce" })
+    res.json({ msg: "Welcome to ecommerce" })
 })
 
 const PORT = process.env.PORT || 5000
