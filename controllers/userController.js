@@ -45,14 +45,13 @@ const userController = {
 
             jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (error, user) => {
                 if (error) return res.status(400).json({ msg: "Please Login or Register" })
-                const accessToken = createAccessToken({ id: user._id })
+                const accessToken = createAccessToken({ id: user.id })
                 res.json({ accessToken })
             })
         } catch (error) {
             return res.status(500).json({ msg: error.message })
         }
 
-        res.json({ rf_token })
     },
 
     login: async(req, res) => {
