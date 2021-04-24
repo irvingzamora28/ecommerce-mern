@@ -1,11 +1,55 @@
 const Products = require("../models/productModel")
 
+
+class APIfeatures {
+    constructor(query, queryString) {
+        this.query = query;
+        this.queryString = queryString;
+    }
+
+    filtering() {
+        // this.queryString = req.query
+        const queryObj = {...this.queryString }
+        const excludedFields = ["page", "sort", "limit"]
+        excludedFields.forEach(elem => delete(queryObj[elem]))
+
+        let queryString = JSON.stringify(queryObj)
+        queryString = queryString.replace(/\b(gte|gt|lt|lte|regex)\b/g, match => '$' + match)
+        this.query.find(JSON.parse(queryString))
+        return this;
+    }
+    sorting() {
+        if (this.queryString.sort) {
+            const sortBy = this.queryString.sort.split(',').join(' ')
+            console.log(sortBy);
+
+            this.query = this.query.sort(sortBy)
+        } else {
+            this.query = this.query.sort("-createdAt")
+        }
+
+        return this;
+    }
+    paginating() {
+        const page = this.queryString.page * 1 || 1
+        const limit = this.queryString.limit * 1 || 10
+        const skip = (page - 1) * limit;
+        this.query = this.query.skip(skip).limit(limit)
+        return this;
+    }
+}
+// 2:51
 const productController = {
     getProducts: async(req, res) => {
         try {
-            const products = await Products.find()
+            const features = new APIfeatures(Products.find(), req.query).filtering().sorting().paginating()
+            const products = await features.query
 
-            res.status(200).json(products)
+            res.status(200).json({
+                status: 'success',
+                result: products.length,
+                products: products
+            })
 
         } catch (error) {
             res.status(500).json({ mgs: error.message })
