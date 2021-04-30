@@ -38,7 +38,7 @@ class APIfeatures {
         return this;
     }
 }
-// 2:51
+
 const productController = {
     getProducts: async(req, res) => {
         try {
