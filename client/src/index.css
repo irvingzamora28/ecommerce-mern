@@ -37,5 +37,8 @@ button {
   cursor: pointer;
 }
 
-/* ------------------------------ Header ------------------------------ */
 @import url("./components/headers/header.css");
+
+@import url("./components/mainpages/products/products.css");
+
+@import url("./components/mainpages/products/detailProduct.css");
