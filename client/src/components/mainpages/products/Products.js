@@ -6,6 +6,8 @@ import ProductItem from "./ProductItem";
 function Products() {
   const state = useContext(GlobalState);
   const [products] = state.productsAPI.products;
+  const [isAdmin] = state.userAPI.isAdmin
+
   console.log(products);
 
   return (
