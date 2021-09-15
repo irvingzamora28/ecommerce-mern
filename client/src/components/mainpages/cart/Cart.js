@@ -22,8 +22,8 @@ function Cart() {
     }, [cart])
 
     const addToCart = async () => {
-        await axios.patch('/user/addcart', {cart}, {
-            headers: {Authorization: token}
+        await axios.patch('/user/addcart', { cart }, {
+            headers: { Authorization: token }
         })
     }
 
@@ -62,8 +62,16 @@ function Cart() {
         }
     }
 
-    const tranSuccess =  async (payment) => {
+    const tranSuccess = async (payment) => {
         console.log(payment);
+        const { paymentID, address } = payment
+        await axios.post('/api/payment', { cart, paymentID, address }, {
+            headers: { Authorization: token }
+        })
+
+        setCart([])
+        addToCart()
+        alert("You have successfully placed an order.")
     }
 
     if (cart.length === 0) {
@@ -83,9 +91,9 @@ function Cart() {
                                 <p>{product.description}</p>
                                 <p>{product.content}</p>
                                 <div className="amount">
-                                <button onClick={() => decrement(product._id)}> - </button>
-                                <span>{product.quantity}</span>
-                                <button onClick={() => increment(product._id)}> + </button>
+                                    <button onClick={() => decrement(product._id)}> - </button>
+                                    <span>{product.quantity}</span>
+                                    <button onClick={() => increment(product._id)}> + </button>
                                 </div>
                                 <div className="delete" onClick={() => removeProduct(product._id)}>X</div>
                             </div>
@@ -97,8 +105,8 @@ function Cart() {
             <div className="total">
                 <h3>Total: $ {total}</h3>
                 <PaypalButton
-                total={total}
-                tranSuccess={tranSuccess} />
+                    total={total}
+                    tranSuccess={tranSuccess} />
             </div>
         </div>
     )

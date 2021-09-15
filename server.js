@@ -4,7 +4,6 @@ const mongoose = require('mongoose')
 const cors = require("cors")
 const fileUpload = require("express-fileupload")
 const cookieParser = require("cookie-parser")
-// 3:01
 const app = express()
 app.use(express.json())
 app.use(cookieParser())
