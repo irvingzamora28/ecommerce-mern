@@ -12,7 +12,7 @@ function OrderDetails() {
     useEffect(() => {
         if (params.id) {
             history.forEach(item => {
-                if (item.id === params.id) setOrderDetails(item)
+                if (item._id === params.id) setOrderDetails(item)
             })
         }
     }, [params.id, history])
@@ -43,7 +43,7 @@ function OrderDetails() {
                 </tbody>
             </table>
 
-            <table style={{ margin: "30px 0px" }}>
+            <table style={{ margin: "30px auto" }}>
                 <thead>
                     <tr>
                         <th></th>
