@@ -7,17 +7,18 @@ function UserAPI(token) {
     const [isAdmin, setIsAdmin] = useState(false)
     const [cart, setCart] = useState([])
     const [history, setHistory] = useState([])
+    const [callback, setCallback] = useState(false)
 
     useEffect(() => {
         console.log("params.token");
         console.log(token);
         if (token) {
-            const getUser = async () => {
+            const getUser = async() => {
                 try {
                     console.log("token");
                     console.log(token);
                     const res = await axios.get('/user/information', {
-                        headers: {Authorization: token}
+                        headers: { Authorization: token }
                     })
                     setIsLoggedIn(true)
                     res.data.role === 1 ? setIsAdmin(true) : setIsAdmin(false)
@@ -30,32 +31,32 @@ function UserAPI(token) {
 
             getUser()
         }
-        
+
     }, [token])
 
     useEffect(() => {
         if (token) {
             const getHistory = async() => {
                 const res = await axios.get('/user/history', {
-                    headers: {Authorization: token}
+                    headers: { Authorization: token }
                 })
                 setHistory(res.data);
             }
             getHistory()
         }
-        
-    }, [token])
 
-    const addCart = async (product) => {
+    }, [token, callback])
+
+    const addCart = async(product) => {
         if (!isLoggedIn) return alert("Please login to continue")
         const check = cart.every((item) => {
             return item._id !== product._id
         })
 
         if (check) {
-            setCart([...cart, {...product, quantity: 1}])
-            await axios.patch("/user/addcart", {cart: [...cart, {...product, quantity: 1}]}, {
-                headers: {Authorization: token}
+            setCart([...cart, {...product, quantity: 1 }])
+            await axios.patch("/user/addcart", { cart: [...cart, {...product, quantity: 1 }] }, {
+                headers: { Authorization: token }
             })
         } else {
             alert("This product has been added to the cart")
@@ -67,7 +68,8 @@ function UserAPI(token) {
         isAdmin: [isAdmin, setIsAdmin],
         cart: [cart, setCart],
         addCart: addCart,
-        history: [history, setHistory]
+        history: [history, setHistory],
+        callback: [callback, setCallback]
     }
 }
 

@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, {useContext} from 'react'
 import {GlobalState} from '../../GlobalState'
 import MenuIcon from './icons/menu.svg'
 import CartIcon from './icons/shopping-cart.svg'
