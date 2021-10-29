@@ -9,10 +9,13 @@ import OrderDetails from './history/OrderDetails'
 import DetailProduct from './products/DetailProduct'
 import Products from './products/Products'
 import NotFound from './utils/NotFound'
+import Categories from './categories/Categories'
+
 function Pages() {
 
     const state = useContext(GlobalState)
     const [isLoggedIn] = state.userAPI.isLoggedIn
+    const [isAdmin] = state.userAPI.isAdmin
 
     return (
         <Switch>
@@ -20,6 +23,7 @@ function Pages() {
             <Route path="/detail/:id" exact component={DetailProduct} />
             <Route path="/login" exact component={isLoggedIn ? NotFound : Login } />
             <Route path="/register" exact component={isLoggedIn ? NotFound: Register} />
+            <Route path="/category" exact component={isAdmin ? Categories : NotFound} />
             <Route path="/history" exact component={isLoggedIn ? OrderHistory : NotFound} />
             <Route path="/history/:id" exact component={isLoggedIn ? OrderDetails : NotFound} />
             <Route path="/cart" exact component={Cart} />
