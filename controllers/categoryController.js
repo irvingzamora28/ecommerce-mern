@@ -19,7 +19,7 @@ const categoryController = {
             const newCategory = new Category({ name })
 
             await newCategory.save()
-            res.json("create")
+            res.json({ msg: "Created category" })
         } catch (error) {
             return res.status(500).json({ msg: error.message })
         }
@@ -39,7 +39,7 @@ const categoryController = {
             const { name } = req.body
             await Category.findOneAndUpdate({ _id: req.params.id }, { name })
 
-            res.json({ mgs: "Updated category" })
+            res.json({ msg: "Updated category" })
         } catch (error) {
             return res.status(500).json({ msg: error.message })
         }
