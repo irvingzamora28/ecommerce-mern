@@ -10,11 +10,10 @@ function Header() {
     const state = useContext(GlobalState)
     const [isLoggedIn] = state.userAPI.isLoggedIn
     const [isAdmin] = state.userAPI.isAdmin
-    const [cart, setCart] = state.userAPI.cart
+    const [cart] = state.userAPI.cart
 
     const logoutUser = async () => {
         await axios.get('/user/logout')
-        localStorage.clear()
         window.location.href = "/"
     }
 
