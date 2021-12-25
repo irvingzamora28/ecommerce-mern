@@ -10,6 +10,7 @@ import DetailProduct from './products/DetailProduct'
 import Products from './products/Products'
 import NotFound from './utils/NotFound'
 import Categories from './categories/Categories'
+import CreateProduct from './createProduct/CreateProduct'
 
 function Pages() {
 
@@ -24,6 +25,7 @@ function Pages() {
             <Route path="/login" exact component={isLoggedIn ? NotFound : Login } />
             <Route path="/register" exact component={isLoggedIn ? NotFound: Register} />
             <Route path="/category" exact component={isAdmin ? Categories : NotFound} />
+            <Route path="/product/create" exact component={isAdmin ? CreateProduct : NotFound} />
             <Route path="/history" exact component={isLoggedIn ? OrderHistory : NotFound} />
             <Route path="/history/:id" exact component={isLoggedIn ? OrderDetails : NotFound} />
             <Route path="/cart" exact component={Cart} />
