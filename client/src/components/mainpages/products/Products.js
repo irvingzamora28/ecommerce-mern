@@ -1,12 +1,23 @@
-import React, { useContext } from "react";
+import axios from "axios";
+import React, { useContext, useEffect } from "react";
 import { GlobalState } from "../../../GlobalState";
 import Loading from "../utils/loading/Loading";
 import ProductItem from "./ProductItem";
 
 function Products() {
   const state = useContext(GlobalState);
-  const [products] = state.productsAPI.products;
+  const [products, setProducts] = state.productsAPI.products;
   const [isAdmin] = state.userAPI.isAdmin
+
+  const getProducts = async () => {
+    const res = await axios.get('/api/products')
+    setProducts(res.data.products);
+
+  }
+
+  useEffect(() => {
+      getProducts()
+  }, [])
 
   console.log(products);
 
