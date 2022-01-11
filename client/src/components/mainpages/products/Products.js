@@ -9,15 +9,15 @@ function Products() {
   const [products, setProducts] = state.productsAPI.products;
   const [isAdmin] = state.userAPI.isAdmin
 
-  const getProducts = async () => {
-    const res = await axios.get('/api/products')
-    setProducts(res.data.products);
-
-  }
-
+  
   useEffect(() => {
+    const getProducts = async () => {
+      const res = await axios.get('/api/products')
+      setProducts(res.data.products);
+  
+    }
       getProducts()
-  }, [])
+  }, [setProducts])
 
   console.log(products);
 

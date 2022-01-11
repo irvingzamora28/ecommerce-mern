@@ -24,12 +24,12 @@ function ProductItem({ product }) {
                     isAdmin ?
                         <>
                             <Link id="btn_delete" to="#!">Delete</Link>
-                            <Link id="btn_edit" to={`/edit_product/${product._id}`}>Edit</Link>
+                            <Link id="btn_edit" to={`/product/edit/${product._id}`}>Edit</Link>
                         </>
                         :
                         <>
                             <Link id="btn_buy" to="#!" onClick={() => addCart(product)}>Buy</Link>
-                            <Link id="btn_view" to={`/detail/${product._id}`}>View</Link>
+                            <Link id="btn_view" to={`/product/detail/${product._id}`}>View</Link>
                         </>
                 }
             </div>

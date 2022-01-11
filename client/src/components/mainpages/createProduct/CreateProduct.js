@@ -1,8 +1,8 @@
 import axios from 'axios'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import Loading from '../utils/loading/Loading'
 import { GlobalState } from '../../../GlobalState'
-import {useHistory} from 'react-router-dom'
+import {useHistory, useParams} from 'react-router-dom'
 
 const initialState = {
     product_id: '',
@@ -10,7 +10,8 @@ const initialState = {
     product_price: 0,
     product_description: 'LaMelo LaFrance Ball (born August 22, 2001) is an American professional basketball player for the Charlotte Hornets of the National Basketball Association (NBA).',
     product_content: 'Ball was trained in basketball by his father, LaVar, as soon as he could walk. At age four, he started playing the sport with his older brothers, Lonzo and LiAngelo, facing much older opponents. He also played flag football with his brothers at age five but continued to focus on basketball. In 2013, while in seventh grade, Ball began playing with his brothers on Big Ballers VXT, a 17-and-under Amateur Athletic Union (AAU) team launched and coached by his parents. The team, which was not sponsored by a major shoe company, did not compete in top AAU circuits and instead took part in local competitions.',
-    product_category: ''
+    product_category: '',
+    _id: ''   
 }
 
 function CreateProduct() {
@@ -21,8 +22,30 @@ function CreateProduct() {
     const [loading, setLoading] = useState(false)
     const [isAdmin] = state.userAPI.isAdmin
     const [token] = state.token
+    const [products] = state.productsAPI.products
+    const [onEdit, setOnEdit] = useState(false)
 
     const history = useHistory()
+    const params = useParams()
+
+    useEffect(() => {
+        if (params.id) {
+            setOnEdit(true)
+            products.forEach(product => {
+                if (product._id === params.id) {
+                    setProduct(product)
+                    setImages(product.images)
+                }
+            });
+        } else {
+            setOnEdit(false)
+            setProduct(initialState)
+            setImages(false)
+        }
+        return () => {
+            
+        }
+    }, [params.id, products])
 
     const styleUpload = {
         display: images ? "block" : "none"
@@ -78,10 +101,17 @@ function CreateProduct() {
         try {
             if (!isAdmin) { return alert("You're not an admin") }
             if (!images) { return alert("Image not provided") }
-            
-            await axios.post('/api/products', {...product, images}, {
-                headers: {Authorization: token}
-            })
+
+            if (onEdit) {
+                await axios.put(`/api/products/${product._id}`, {...product, images}, {
+                    headers: {Authorization: token}
+                })
+            } else {
+                await axios.post('/api/products', {...product, images}, {
+                    headers: {Authorization: token}
+                })
+
+            }
 
             setImages(false)
             setProduct(initialState)
@@ -110,7 +140,7 @@ function CreateProduct() {
             <form onSubmit={handleSubmit}>
             <div className="row">
                     <label htmlFor="product_id">Product ID</label>
-                    <input type="text" name="product_id" id="product_id" required value={product.product_id} onChange={handleChangeInput} />
+                    <input type="text" name="product_id" id="product_id" required value={product.product_id} disabled={product._id} onChange={handleChangeInput} />
                 </div>
 
                 <div className="row">
@@ -145,7 +175,7 @@ function CreateProduct() {
                     </select>
                 </div>
 
-                <button type="submit">Create</button>
+                <button type="submit">{onEdit ? 'Update' : 'Create'}</button>
             </form>
 
         </div>
