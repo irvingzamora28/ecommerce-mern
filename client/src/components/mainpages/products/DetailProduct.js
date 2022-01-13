@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { GlobalState } from '../../../GlobalState';
-import ProductItem from './ProductItem';
+import ProductItem from '../utils/productItem/ProductItem';
 
 function DetailProduct() {
     const params = useParams()

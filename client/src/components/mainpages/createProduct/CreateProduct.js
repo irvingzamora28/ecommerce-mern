@@ -24,6 +24,7 @@ function CreateProduct() {
     const [token] = state.token
     const [products] = state.productsAPI.products
     const [onEdit, setOnEdit] = useState(false)
+    const [callback, setCallback] = state.productsAPI.callback
 
     const history = useHistory()
     const params = useParams()
@@ -113,8 +114,7 @@ function CreateProduct() {
 
             }
 
-            setImages(false)
-            setProduct(initialState)
+            setCallback(!callback)
             history.push('/')
         } catch (error) {
             console.log(error.response.data.msg);
