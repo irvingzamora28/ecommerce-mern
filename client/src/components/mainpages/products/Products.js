@@ -4,6 +4,7 @@ import { GlobalState } from "../../../GlobalState";
 import Loading from "../utils/loading/Loading";
 import ProductItem from "../utils/productItem/ProductItem";
 import Filters from "./Filters";
+import LoadMore from "./LoadMore";
 
 function Products() {
   const state = useContext(GlobalState);
@@ -72,6 +73,7 @@ const deleteAll = () =>{
             return <ProductItem key={product._id} product={product} isAdmin={isAdmin} deleteProduct={deleteProduct} handleCheck={handleCheck} />;
             })}
         </div>
+        <LoadMore />
         {products.length === 0 && <Loading />}
     </>
     );
