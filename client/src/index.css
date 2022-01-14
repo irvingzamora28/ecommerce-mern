@@ -81,3 +81,30 @@ button {
         justify-content: space-between;
     }
 }
+
+@media (max-width: 570px) {
+    .filter_menu .row span {
+        display: none;
+    }
+}
+
+@media (max-width: 500px) {
+    .App {
+        padding: 0 10px;
+    }
+    .detail {
+        font-size: 100%;
+        padding: 0;
+    }
+    .filter_menu input {
+        margin: 0;
+    }
+    .filter_menu .sort {
+        flex: 1;
+    }
+    .filter_menu .sort select {
+        width: 100%;
+        min-width: 290px;
+        margin: 5px 0;
+    }
+}
