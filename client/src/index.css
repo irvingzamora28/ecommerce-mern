@@ -107,4 +107,13 @@ button {
         min-width: 290px;
         margin: 5px 0;
     }
+    .login-page {
+        padding: 30px 15px;
+    }
+    .delete-all {
+        margin: 20px 0;
+    }
+    .create_product .upload {
+        margin: 20px 0;
+    }
 }
