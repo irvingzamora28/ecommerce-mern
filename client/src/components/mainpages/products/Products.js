@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import { GlobalState } from "../../../GlobalState";
 import Loading from "../utils/loading/Loading";
 import ProductItem from "../utils/productItem/ProductItem";
+import Filters from "./Filters";
 
 function Products() {
   const state = useContext(GlobalState);
@@ -12,7 +13,7 @@ function Products() {
   const [callback, setCallback] = state.productsAPI.callback
   const [loading, setLoading] = useState(false)
   const [isCheck, setIsCheck] = useState(false)
-  
+
   const handleCheck = (id) =>{
     products.forEach(product => {
         if(product._id === id) product.checked = !product.checked
@@ -55,24 +56,25 @@ const deleteAll = () =>{
 
   console.log(products);
   if(loading) return <div><Loading /></div>
-  return (
+    return (
     <>
-      {
-        isAdmin && 
-        <div className="delete-all">
-            <span>Select all</span>
-            <input type="checkbox" checked={isCheck} onChange={checkAll} />
-            <button onClick={deleteAll}>Delete ALL</button>
+        <Filters />
+        {
+            isAdmin && 
+            <div className="delete-all">
+                <span>Select all</span>
+                <input type="checkbox" checked={isCheck} onChange={checkAll} />
+                <button onClick={deleteAll}>Delete ALL</button>
+            </div>
+        }
+        <div className="products">
+            {products.map((product) => {
+            return <ProductItem key={product._id} product={product} isAdmin={isAdmin} deleteProduct={deleteProduct} handleCheck={handleCheck} />;
+            })}
         </div>
-      }
-      <div className="products">
-        {products.map((product) => {
-          return <ProductItem key={product._id} product={product} isAdmin={isAdmin} deleteProduct={deleteProduct} handleCheck={handleCheck} />;
-        })}
-      </div>
-      {products.length === 0 && <Loading />}
+        {products.length === 0 && <Loading />}
     </>
-  );
+    );
 }
 
 export default Products;
