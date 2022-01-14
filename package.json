@@ -4,7 +4,14 @@
     "description": "E-commerce website MERN Stack",
     "main": "server.js",
     "scripts": {
-        "dev": "nodemon server.js"
+        "start": "node server.js",
+        "server": "nodemon server.js",
+        "client": "cd client && yarn run start",
+        "server-install": "yarn",
+        "client-install": "cd client && yarn",
+        "install-all": "concurrently \"yarn run server-install\" \"yarn run client-install\" ",
+        "dev": "concurrently \"yarn run server\" \"yarn run client\" ",
+        "heroku-postbuild": "cd client && yarn && yarn run build"
     },
     "repository": {
         "type": "git",
