@@ -1,4 +1,4 @@
-const { default: Products } = require("../client/src/components/mainpages/products/Products")
+const Products = require("../models/productModel")
 const Category = require("../models/categoryModel")
 
 const categoryController = {
